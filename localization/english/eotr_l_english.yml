@@ -45,3 +45,25 @@
  eotr_priority_culture_label:0 "Culture First"
  eotr_priority_culture_tooltip:0 "When both apply, the culture directive wins."
  eotr_priority_culture_effect_tooltip:0 "Priority set to #V Culture First#!."
+
+ # Default Edict decision
+ eotr_set_default_edict:0 "Set Default Edict"
+ eotr_set_default_edict_desc:0 "When a vassal falls through both Religion and Culture rules, this directive is applied. Pick #V Foster Prosperity#! for economic building focus, #V Reinforce the Borders#! for fortification focus, #V Marshal the Hosts#! for military building focus, or #V None#! to leave such vassals with no directive."
+ eotr_set_default_edict_tooltip:0 "Choose the fallback directive for vassals where no religion or culture rule applies."
+ eotr_set_default_edict_confirm:0 "Set Default Edict"
+
+ eotr_default_prosperity_label:0 "Foster Prosperity"
+ eotr_default_prosperity_tooltip:0 "Fallback assigns [vassal_directive_building_focus_economy|E]."
+ eotr_default_prosperity_effect_tooltip:0 "Default Edict set to #V Foster Prosperity#!."
+
+ eotr_default_bulwark_label:0 "Reinforce the Borders"
+ eotr_default_bulwark_tooltip:0 "Fallback assigns [vassal_directive_building_focus_fortification|E]."
+ eotr_default_bulwark_effect_tooltip:0 "Default Edict set to #V Reinforce the Borders#!."
+
+ eotr_default_martial_label:0 "Marshal the Hosts"
+ eotr_default_martial_tooltip:0 "Fallback assigns [vassal_directive_building_focus_military|E]."
+ eotr_default_martial_effect_tooltip:0 "Default Edict set to #V Marshal the Hosts#!."
+
+ eotr_default_none_label:0 "None"
+ eotr_default_none_tooltip:0 "No fallback directive; affected vassals have any previous directive cleared."
+ eotr_default_none_effect_tooltip:0 "Default Edict set to #V None#!."

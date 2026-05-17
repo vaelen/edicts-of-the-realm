@@ -1,0 +1,17 @@
+# True if the character holds at least one county whose faith differs from
+# the character's own faith. Used to decide whether vassal_directive_convert_faith
+# would have any work to do.
+eotr_has_faith_misaligned_county = {
+	any_held_county = {
+		NOT = { faith = prev.faith }
+	}
+}
+
+# True if the character holds at least one county whose culture differs from
+# the character's own culture. Used for both convert_culture and
+# improve_cultural_acceptance candidate checks.
+eotr_has_culture_misaligned_county = {
+	any_held_county = {
+		NOT = { culture = prev.culture }
+	}
+}

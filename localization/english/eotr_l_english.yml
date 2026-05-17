@@ -32,3 +32,16 @@
  eotr_culture_policy_none_label:0 "None"
  eotr_culture_policy_none_tooltip:0 "Culture is ignored when directives are issued."
  eotr_culture_policy_none_effect_tooltip:0 "Culture Policy set to #V None#!."
+ # Priority decision
+ eotr_set_priority:0 "Set Conflict Priority"
+ eotr_set_priority_desc:0 "When both your Religion and Culture policies produce a directive for the same vassal, this setting decides which wins. Has no effect when only one (or neither) policy is active."
+ eotr_set_priority_tooltip:0 "Decide whether religion or culture wins when both apply to the same vassal."
+ eotr_set_priority_confirm:0 "Set Priority"
+
+ eotr_priority_religion_label:0 "Religion First"
+ eotr_priority_religion_tooltip:0 "When both apply, the religion directive wins."
+ eotr_priority_religion_effect_tooltip:0 "Priority set to #V Religion First#!."
+
+ eotr_priority_culture_label:0 "Culture First"
+ eotr_priority_culture_tooltip:0 "When both apply, the culture directive wins."
+ eotr_priority_culture_effect_tooltip:0 "Priority set to #V Culture First#!."

@@ -1,0 +1,102 @@
+# Per-vassal evaluator. Runs on the VASSAL scope; root = the player (liege).
+#
+# Logic mirrors docs/superpowers/specs/2026-05-17-edicts-of-the-realm-design.md
+# Section 4 "Per-vassal evaluation algorithm".
+#
+# Stages each candidate as a temp variable on the vassal, then resolves via
+# the player's priority flag, then falls through to the default edict.
+eotr_evaluate_and_assign_directive = {
+	# --- Religion candidate ---
+	# Only fires when player has Religion=Convert AND vassal shares player's
+	# faith AND vassal has at least one misaligned county. Heretic vassals
+	# never get convert_faith (it would spread heresy).
+	if = {
+		limit = {
+			root = { has_character_flag = eotr_religion_convert }
+			faith = root.faith
+			eotr_has_faith_misaligned_county = yes
+		}
+		set_variable = { name = eotr_pick_religion_convert value = yes }
+	}
+
+	# --- Culture candidate ---
+	# Convert path: only when vassal shares player's culture AND has a misaligned county.
+	if = {
+		limit = {
+			root = { has_character_flag = eotr_culture_convert }
+			culture = root.culture
+			eotr_has_culture_misaligned_county = yes
+		}
+		set_variable = { name = eotr_pick_culture_convert value = yes }
+	}
+	# Acceptance path: independent of liege's culture; only the vassal-vs-lands diversity matters.
+	else_if = {
+		limit = {
+			root = { has_character_flag = eotr_culture_accept }
+			eotr_has_culture_misaligned_county = yes
+		}
+		set_variable = { name = eotr_pick_culture_accept value = yes }
+	}
+
+	# --- Clear any prior directive (vanilla or from a previous run of this mod) ---
+	remove_vassal_directives = yes
+
+	# --- Resolve ---
+	if = {
+		# Both religion and culture candidates fired -> use priority
+		limit = {
+			has_variable = eotr_pick_religion_convert
+			OR = {
+				has_variable = eotr_pick_culture_convert
+				has_variable = eotr_pick_culture_accept
+			}
+		}
+		if = {
+			limit = { root = { has_character_flag = eotr_priority_religion } }
+			add_character_flag = vassal_directive_convert_faith
+		}
+		else = {
+			# Culture wins
+			if = {
+				limit = { has_variable = eotr_pick_culture_convert }
+				add_character_flag = vassal_directive_convert_culture
+			}
+			else = {
+				add_character_flag = vassal_directive_improve_cultural_acceptance
+			}
+		}
+	}
+	else_if = {
+		limit = { has_variable = eotr_pick_religion_convert }
+		add_character_flag = vassal_directive_convert_faith
+	}
+	else_if = {
+		limit = { has_variable = eotr_pick_culture_convert }
+		add_character_flag = vassal_directive_convert_culture
+	}
+	else_if = {
+		limit = { has_variable = eotr_pick_culture_accept }
+		add_character_flag = vassal_directive_improve_cultural_acceptance
+	}
+	else = {
+		# --- Default edict fallthrough ---
+		if = {
+			limit = { root = { has_character_flag = eotr_default_prosperity } }
+			add_character_flag = vassal_directive_building_focus_economy
+		}
+		else_if = {
+			limit = { root = { has_character_flag = eotr_default_bulwark } }
+			add_character_flag = vassal_directive_building_focus_fortification
+		}
+		else_if = {
+			limit = { root = { has_character_flag = eotr_default_martial } }
+			add_character_flag = vassal_directive_building_focus_military
+		}
+		# else: eotr_default_none or no default set -> leave cleared
+	}
+
+	# --- Cleanup the temp variables (no-op if not set) ---
+	remove_variable = eotr_pick_religion_convert
+	remove_variable = eotr_pick_culture_convert
+	remove_variable = eotr_pick_culture_accept
+}

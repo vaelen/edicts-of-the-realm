@@ -247,3 +247,42 @@ eotr_set_default_edict = {
 	ai_will_do = { base = 0 }
 	ai_check_interval = 0
 }
+
+# Action: Issue Directives to the Realm
+# Iterates every sub-realm vassal (cascading through tiers) and invokes the
+# evaluator on each. Hidden when the player has no matching vassals.
+eotr_apply_directives = {
+	picture = "gfx/interface/illustrations/decisions/fp2_decision_struggle_compromise.dds"
+	decision_group_type = eotr_realm_directives
+
+	desc = eotr_apply_directives_desc
+	selection_tooltip = eotr_apply_directives_tooltip
+	confirm_text = eotr_apply_directives_confirm
+
+	is_shown = {
+		is_landed = yes
+		is_ai = no
+		any_vassal_or_below = {
+			is_landed = yes
+			is_ai = yes
+			highest_held_title_tier >= tier_county
+		}
+	}
+
+	is_valid_showing_failures_only = {}
+
+	effect = {
+		custom_tooltip = eotr_apply_directives_effect_tooltip
+		every_vassal_or_below = {
+			limit = {
+				is_landed = yes
+				is_ai = yes
+				highest_held_title_tier >= tier_county
+			}
+			eotr_evaluate_and_assign_directive = yes
+		}
+	}
+
+	ai_will_do = { base = 0 }
+	ai_check_interval = 0
+}

@@ -1,4 +1,4 @@
-# Subject Directives — Design
+# Edicts of the Realm — Design
 
 **Status:** Approved
 **Date:** 2026-05-17
@@ -17,11 +17,11 @@ The reference mod (Better Mass Vassal Directive) reduced the tedium of issuing i
 1. **No filtering or per-vassal variation.** Every direct vassal receives the same directive, even when that's counter-productive (e.g. assigning `convert_faith` to a heretic vassal spreads heresy rather than the liege's faith).
 2. **Direct vassals only.** Sub-vassals never receive a directive through the mod's single decision.
 
-Subject Directives addresses both by treating the directive as a function of each vassal's situation, and by cascading to all sub-realm vassals.
+Edicts of the Realm addresses both by treating the directive as a function of each vassal's situation, and by cascading to all sub-realm vassals.
 
 ## 3. Player-facing model
 
-The mod exposes **four persistent settings** and **one action**, presented as five decisions in a custom decision group called "Subject Directives".
+The mod exposes **four persistent settings** and **one action**, presented as five decisions in a custom decision group called "Edicts of the Realm".
 
 | # | Setting | Options | Persistence |
 |---|---|---|---|
@@ -55,7 +55,7 @@ For each matched vassal, the mod runs the following decision tree.
 
 ### 4.1 Religion candidate
 
-If the player has `sd_religion_convert`:
+If the player has `eotr_religion_convert`:
 
 - Vassal's faith == liege's faith **and** vassal holds at least one county whose faith ≠ vassal's faith → candidate = `vassal_directive_convert_faith`
 - Otherwise → no religion candidate
@@ -64,12 +64,12 @@ Rationale: `convert_faith` makes the vassal spread *their own* faith. Assigning 
 
 ### 4.2 Culture candidate
 
-If the player has `sd_culture_convert`:
+If the player has `eotr_culture_convert`:
 
 - Vassal's culture == liege's culture **and** vassal holds at least one county whose culture ≠ vassal's culture → candidate = `vassal_directive_convert_culture`
 - Otherwise → no culture candidate
 
-Else if the player has `sd_culture_accept`:
+Else if the player has `eotr_culture_accept`:
 
 - Vassal holds at least one county whose culture ≠ vassal's culture → candidate = `vassal_directive_improve_cultural_acceptance`
 - Otherwise → no culture candidate
@@ -78,13 +78,13 @@ Rationale: `convert_culture` mirrors `convert_faith` (only safe to assign when v
 
 ### 4.3 Resolution
 
-- Both candidates present → apply the one named by the player's Priority flag (`sd_priority_religion` → religion candidate; `sd_priority_culture` → culture candidate).
+- Both candidates present → apply the one named by the player's Priority flag (`eotr_priority_religion` → religion candidate; `eotr_priority_culture` → culture candidate).
 - Exactly one candidate present → apply it.
 - Neither candidate present → apply the Default Edict's directive:
-  - `sd_default_prosperity` → `vassal_directive_building_focus_economy`
-  - `sd_default_bulwark` → `vassal_directive_building_focus_fortification`
-  - `sd_default_martial` → `vassal_directive_building_focus_military`
-  - `sd_default_none` → assign nothing (only clear)
+  - `eotr_default_prosperity` → `vassal_directive_building_focus_economy`
+  - `eotr_default_bulwark` → `vassal_directive_building_focus_fortification`
+  - `eotr_default_martial` → `vassal_directive_building_focus_military`
+  - `eotr_default_none` → assign nothing (only clear)
 
 ### 4.4 Application
 
@@ -105,91 +105,91 @@ subject-directives-mod/
 ├── README.md
 ├── common/
 │   ├── decision_group_types/
-│   │   └── sd_decision_group.txt
+│   │   └── eotr_decision_group.txt
 │   ├── decisions/
-│   │   └── sd_decisions.txt
+│   │   └── eotr_decisions.txt
 │   ├── scripted_effects/
-│   │   └── sd_effects.txt
+│   │   └── eotr_effects.txt
 │   └── scripted_triggers/
-│       └── sd_triggers.txt
+│       └── eotr_triggers.txt
 └── localization/
     └── english/
-        └── sd_l_english.yml
+        └── eotr_l_english.yml
 ```
 
 ### 6.1 `descriptor.mod`
 
 Standard CK3 mod descriptor: `name`, `version`, `supported_version`, tags including "Decisions", "Gameplay", "Utilities".
 
-### 6.2 `common/decision_group_types/sd_decision_group.txt`
+### 6.2 `common/decision_group_types/eotr_decision_group.txt`
 
-Defines a custom decision group `sd_realm_directives` so all five decisions cluster together in the decisions UI rather than scattering through the generic group.
+Defines a custom decision group `eotr_realm_directives` so all five decisions cluster together in the decisions UI rather than scattering through the generic group.
 
-### 6.3 `common/decisions/sd_decisions.txt`
+### 6.3 `common/decisions/eotr_decisions.txt`
 
 Five decisions:
 
-1. `sd_set_religion_policy` — option list controller: Convert / None. On pick: clear `sd_religion_convert`, then set the chosen flag (or none).
-2. `sd_set_culture_policy` — option list: Convert / Acceptance / None. On pick: clear `sd_culture_convert` and `sd_culture_accept`, then set the chosen flag (or none).
-3. `sd_set_priority` — option list: Religion-first / Culture-first. On pick: clear both priority flags, then set the chosen flag.
-4. `sd_set_default_edict` — option list: Foster Prosperity / Reinforce the Borders / Marshal the Hosts / None. On pick: clear all four default-edict flags, then set the chosen flag.
-5. `sd_apply_directives` — the action. Effect calls the scripted effect `sd_evaluate_and_assign_directive` for every matched vassal via `every_vassal_or_below`.
+1. `eotr_set_religion_policy` — option list controller: Convert / None. On pick: clear `eotr_religion_convert`, then set the chosen flag (or none).
+2. `eotr_set_culture_policy` — option list: Convert / Acceptance / None. On pick: clear `eotr_culture_convert` and `eotr_culture_accept`, then set the chosen flag (or none).
+3. `eotr_set_priority` — option list: Religion-first / Culture-first. On pick: clear both priority flags, then set the chosen flag.
+4. `eotr_set_default_edict` — option list: Foster Prosperity / Reinforce the Borders / Marshal the Hosts / None. On pick: clear all four default-edict flags, then set the chosen flag.
+5. `eotr_apply_directives` — the action. Effect calls the scripted effect `eotr_evaluate_and_assign_directive` for every matched vassal via `every_vassal_or_below`.
 
-All decisions: `decision_group_type = sd_realm_directives`, `ai_will_do = { base = 0 }`, `ai_check_interval = 0` (player-only).
+All decisions: `decision_group_type = eotr_realm_directives`, `ai_will_do = { base = 0 }`, `ai_check_interval = 0` (player-only).
 
 Each setting decision's description includes a tooltip showing the *current* value via `has_character_flag` checks, so the player can see at a glance what is set.
 
-`sd_apply_directives` is `is_shown` gated on the player having at least one matching vassal (`any_vassal_or_below = { ... }` with the same limits as the iteration).
+`eotr_apply_directives` is `is_shown` gated on the player having at least one matching vassal (`any_vassal_or_below = { ... }` with the same limits as the iteration).
 
-### 6.4 `common/scripted_effects/sd_effects.txt`
+### 6.4 `common/scripted_effects/eotr_effects.txt`
 
-One main effect, `sd_evaluate_and_assign_directive`, run in the scope of each candidate vassal with `root` = liege. Contains the resolution tree from Section 4. Uses nested `if = { limit = { ... } ... else = { ... } }` blocks rather than `switch` because the conditions need to inspect both the vassal scope and root flags simultaneously.
+One main effect, `eotr_evaluate_and_assign_directive`, run in the scope of each candidate vassal with `root` = liege. Contains the resolution tree from Section 4. Uses nested `if = { limit = { ... } ... else = { ... } }` blocks rather than `switch` because the conditions need to inspect both the vassal scope and root flags simultaneously.
 
 Pseudocode:
 
 ```
-sd_evaluate_and_assign_directive = {
+eotr_evaluate_and_assign_directive = {
     # religion candidate
     if = {
         limit = {
-            root = { has_character_flag = sd_religion_convert }
+            root = { has_character_flag = eotr_religion_convert }
             faith = root.faith
-            sd_has_faith_misaligned_county = yes
+            eotr_has_faith_misaligned_county = yes
         }
-        set_variable = { name = sd_religion_pick value = yes }
+        set_variable = { name = eotr_religion_pick value = yes }
     }
     # culture candidate
     if = {
         limit = {
-            root = { has_character_flag = sd_culture_convert }
+            root = { has_character_flag = eotr_culture_convert }
             culture = root.culture
-            sd_has_culture_misaligned_county = yes
+            eotr_has_culture_misaligned_county = yes
         }
-        set_variable = { name = sd_culture_pick value = flag:convert }
+        set_variable = { name = eotr_culture_pick value = flag:convert }
     }
     else_if = {
         limit = {
-            root = { has_character_flag = sd_culture_accept }
-            sd_has_culture_misaligned_county = yes
+            root = { has_character_flag = eotr_culture_accept }
+            eotr_has_culture_misaligned_county = yes
         }
-        set_variable = { name = sd_culture_pick value = flag:accept }
+        set_variable = { name = eotr_culture_pick value = flag:accept }
     }
 
     # resolve
     remove_vassal_directives = yes
     if = {
         limit = {
-            has_variable = sd_religion_pick
-            has_variable = sd_culture_pick
+            has_variable = eotr_religion_pick
+            has_variable = eotr_culture_pick
         }
         if = {
-            limit = { root = { has_character_flag = sd_priority_religion } }
+            limit = { root = { has_character_flag = eotr_priority_religion } }
             add_character_flag = vassal_directive_convert_faith
         }
         else = {
             # culture path
             if = {
-                limit = { var:sd_culture_pick = flag:convert }
+                limit = { var:eotr_culture_pick = flag:convert }
                 add_character_flag = vassal_directive_convert_culture
             }
             else = {
@@ -198,13 +198,13 @@ sd_evaluate_and_assign_directive = {
         }
     }
     else_if = {
-        limit = { has_variable = sd_religion_pick }
+        limit = { has_variable = eotr_religion_pick }
         add_character_flag = vassal_directive_convert_faith
     }
     else_if = {
-        limit = { has_variable = sd_culture_pick }
+        limit = { has_variable = eotr_culture_pick }
         if = {
-            limit = { var:sd_culture_pick = flag:convert }
+            limit = { var:eotr_culture_pick = flag:convert }
             add_character_flag = vassal_directive_convert_culture
         }
         else = {
@@ -214,51 +214,51 @@ sd_evaluate_and_assign_directive = {
     else = {
         # default edict fallthrough
         if = {
-            limit = { root = { has_character_flag = sd_default_prosperity } }
+            limit = { root = { has_character_flag = eotr_default_prosperity } }
             add_character_flag = vassal_directive_building_focus_economy
         }
         else_if = {
-            limit = { root = { has_character_flag = sd_default_bulwark } }
+            limit = { root = { has_character_flag = eotr_default_bulwark } }
             add_character_flag = vassal_directive_building_focus_fortification
         }
         else_if = {
-            limit = { root = { has_character_flag = sd_default_martial } }
+            limit = { root = { has_character_flag = eotr_default_martial } }
             add_character_flag = vassal_directive_building_focus_military
         }
-        # else: sd_default_none or unset — leave cleared
+        # else: eotr_default_none or unset — leave cleared
     }
 
     # cleanup
-    remove_variable = sd_religion_pick
-    remove_variable = sd_culture_pick
+    remove_variable = eotr_religion_pick
+    remove_variable = eotr_culture_pick
 }
 ```
 
-### 6.5 `common/scripted_triggers/sd_triggers.txt`
+### 6.5 `common/scripted_triggers/eotr_triggers.txt`
 
 Two triggers, both evaluated in the scope of a character (the vassal):
 
 ```
-sd_has_faith_misaligned_county = {
+eotr_has_faith_misaligned_county = {
     any_held_county = {
         NOT = { faith = prev.faith }
     }
 }
 
-sd_has_culture_misaligned_county = {
+eotr_has_culture_misaligned_county = {
     any_held_county = {
         NOT = { culture = prev.culture }
     }
 }
 ```
 
-### 6.6 `localization/english/sd_l_english.yml`
+### 6.6 `localization/english/eotr_l_english.yml`
 
 All visible strings: decision names, descriptions, option labels, confirm text, "Currently: X" tooltips. UTF-8 BOM required (CK3 convention).
 
 ## 7. UI and visibility
 
-- All five decisions live in the custom `sd_realm_directives` decision group, so they appear together in the player's decisions UI.
+- All five decisions live in the custom `eotr_realm_directives` decision group, so they appear together in the player's decisions UI.
 - Setting decisions are always visible to landed rulers (`is_shown = { is_landed = yes }`).
 - The Apply decision is visible only when the player has at least one matching sub-realm vassal.
 - Each setting decision's description names the *current* setting using `has_character_flag` lookups.
@@ -278,9 +278,9 @@ All visible strings: decision names, descriptions, option labels, confirm text, 
 
 ## 9. Compatibility
 
-- All character flags introduced by this mod use the `sd_` prefix to avoid collision with other mods.
+- All character flags introduced by this mod use the `eotr_` prefix to avoid collision with other mods.
 - The mod uses only vanilla `vassal_directive_*` flags as outputs, so vanilla and other mods that read those flags (including Better Mass Vassal Directive) continue to interpret them correctly.
-- Running Subject Directives alongside Better Mass Vassal Directive is harmless — they both clear directives before assignment, so whichever was applied last wins. They do not corrupt each other's state.
+- Running Edicts of the Realm alongside Better Mass Vassal Directive is harmless — they both clear directives before assignment, so whichever was applied last wins. They do not corrupt each other's state.
 
 ## 10. Out of scope (YAGNI)
 

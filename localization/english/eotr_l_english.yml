@@ -14,3 +14,21 @@
  eotr_religion_policy_none_label:0 "None"
  eotr_religion_policy_none_tooltip:0 "Religion is ignored when directives are issued."
  eotr_religion_policy_none_effect_tooltip:0 "Religion Policy set to #V None#!."
+
+ # Culture Policy decision
+ eotr_set_culture_policy:0 "Set Culture Policy"
+ eotr_set_culture_policy_desc:0 "Decide how your vassals should handle culture. Pick #V Convert#! to push your culture into mismatched counties (only safe on same-culture vassals), #V Acceptance#! to improve cultural acceptance for any vassal whose lands include foreign cultures, or #V None#! to ignore culture."
+ eotr_set_culture_policy_tooltip:0 "Choose how Edicts of the Realm handles culture when issuing realm-wide directives."
+ eotr_set_culture_policy_confirm:0 "Set Culture Policy"
+
+ eotr_culture_policy_convert_label:0 "Convert"
+ eotr_culture_policy_convert_tooltip:0 "Vassals who share your culture and hold counties of differing cultures will be assigned [vassal_directive_convert_culture|E]."
+ eotr_culture_policy_convert_effect_tooltip:0 "Culture Policy set to #V Convert#!."
+
+ eotr_culture_policy_accept_label:0 "Acceptance"
+ eotr_culture_policy_accept_tooltip:0 "Any vassal whose lands include at least one county of a different culture than the vassal will be assigned [vassal_directive_improve_cultural_acceptance|E]."
+ eotr_culture_policy_accept_effect_tooltip:0 "Culture Policy set to #V Acceptance#!."
+
+ eotr_culture_policy_none_label:0 "None"
+ eotr_culture_policy_none_tooltip:0 "Culture is ignored when directives are issued."
+ eotr_culture_policy_none_effect_tooltip:0 "Culture Policy set to #V None#!."

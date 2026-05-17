@@ -1,0 +1,5 @@
+Edicts of the Realm
+
+Inspired by Better Mass Vassal Directive
+  by Wehrmachtserdbeere and Nightwolf
+  https://github.com/Wehrmachtserdbeere/better_mass_vassal_directive

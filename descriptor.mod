@@ -5,4 +5,4 @@ tags={
 	"Utilities"
 }
 name="Edicts of the Realm"
-supported_version="1.*.*"
+supported_version="1.19.*"

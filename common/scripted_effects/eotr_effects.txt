@@ -1,4 +1,4 @@
-# Per-vassal evaluator. Runs on the VASSAL scope; root = the player (liege).
+﻿# Per-vassal evaluator. Runs on the VASSAL scope; root = the player (liege).
 #
 # Logic mirrors docs/superpowers/specs/2026-05-17-edicts-of-the-realm-design.md
 # Section 4 "Per-vassal evaluation algorithm".

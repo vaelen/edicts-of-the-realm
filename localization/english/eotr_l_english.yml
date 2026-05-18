@@ -3,12 +3,12 @@
 
  # Religion Policy decision
  eotr_set_religion_policy:0 "Set Religion Policy"
- eotr_set_religion_policy_desc:0 "Decide how your vassals should handle religion across the realm. Pick #V Convert#! to push your faith into mismatched counties (only safe on same-faith vassals), or #V None#! to ignore religion."
+ eotr_set_religion_policy_desc:0 "Decide how your vassals should handle religion across the realm. Choose #V Convert#! to push your faith into counties of other faiths. This directive will only be given to vassals who share your faith and control counties with differing faiths. Choose #V None#! to ignore religion entirely."
  eotr_set_religion_policy_tooltip:0 "Choose how Edicts of the Realm handles religion when issuing realm-wide directives."
  eotr_set_religion_policy_confirm:0 "Set Religion Policy"
 
  eotr_religion_policy_convert_label:0 "Convert"
- eotr_religion_policy_convert_tooltip:0 "Vassals who share your faith and hold misaligned counties will be assigned [vassal_directive_convert_faith|E] when directives are issued."
+ eotr_religion_policy_convert_tooltip:0 "Vassals who share your faith and hold counties of other faiths will be assigned the #V Convert Faith#! [directive|E] when directives are issued."
  eotr_religion_policy_convert_effect_tooltip:0 "Religion Policy set to #V Convert#!."
 
  eotr_religion_policy_none_label:0 "None"
@@ -17,16 +17,16 @@
 
  # Culture Policy decision
  eotr_set_culture_policy:0 "Set Culture Policy"
- eotr_set_culture_policy_desc:0 "Decide how your vassals should handle culture. Pick #V Convert#! to push your culture into mismatched counties (only safe on same-culture vassals), #V Acceptance#! to improve cultural acceptance for any vassal whose lands include foreign cultures, or #V None#! to ignore culture."
+ eotr_set_culture_policy_desc:0 "Decide how your vassals should handle culture. Pick #V Convert#! to push your culture into counties of other cultures. This directive will only be given to vassals who share your culture and control counties of foreign cultures. Choose #V Acceptance#! to increase cultural acceptance. This directive will be given to all vassals who control counties of foriegn cultures, regardless of whether or not the vassals own culture matches your own. Choose #V None#! to ignore culture enitrely."
  eotr_set_culture_policy_tooltip:0 "Choose how Edicts of the Realm handles culture when issuing realm-wide directives."
  eotr_set_culture_policy_confirm:0 "Set Culture Policy"
 
  eotr_culture_policy_convert_label:0 "Convert"
- eotr_culture_policy_convert_tooltip:0 "Vassals who share your culture and hold counties of differing cultures will be assigned [vassal_directive_convert_culture|E]."
+ eotr_culture_policy_convert_tooltip:0 "Vassals who share your culture and hold counties of differing cultures will be assigned the #V Convert Culture#! [directive|E]."
  eotr_culture_policy_convert_effect_tooltip:0 "Culture Policy set to #V Convert#!."
 
  eotr_culture_policy_accept_label:0 "Acceptance"
- eotr_culture_policy_accept_tooltip:0 "Any vassal whose lands include at least one county of a different culture than the vassal will be assigned [vassal_directive_improve_cultural_acceptance|E]."
+ eotr_culture_policy_accept_tooltip:0 "Any vassal whose lands include at least one county of a different culture than the vassal will be assigned the #V Improve Cultural Acceptance#! [directive|E]."
  eotr_culture_policy_accept_effect_tooltip:0 "Culture Policy set to #V Acceptance#!."
 
  eotr_culture_policy_none_label:0 "None"
@@ -34,7 +34,7 @@
  eotr_culture_policy_none_effect_tooltip:0 "Culture Policy set to #V None#!."
  # Priority decision
  eotr_set_priority:0 "Set Conflict Priority"
- eotr_set_priority_desc:0 "When both your Religion and Culture policies produce a directive for the same vassal, this setting decides which wins. Has no effect when only one (or neither) policy is active."
+ eotr_set_priority_desc:0 "When both your Religion and Culture policies produce a directive for the same vassal, this setting decides which wins. Has no effect when only one (or neither) directive would be applied."
  eotr_set_priority_tooltip:0 "Decide whether religion or culture wins when both apply to the same vassal."
  eotr_set_priority_confirm:0 "Set Priority"
 
@@ -48,24 +48,24 @@
 
  # Default Edict decision
  eotr_set_default_edict:0 "Set Default Edict"
- eotr_set_default_edict_desc:0 "When a vassal falls through both Religion and Culture rules, this directive is applied. Pick #V Foster Prosperity#! for economic building focus, #V Reinforce the Borders#! for fortification focus, #V Marshal the Hosts#! for military building focus, or #V None#! to leave such vassals with no directive."
+ eotr_set_default_edict_desc:0 "When neither a religion directive nor a culture directive can be applied to a vassal, this directive is applied instead. Pick #V Foster Prosperity#! to focus on building economic buildings, #V Reinforce the Borders#! to focus on building fortifications, #V Marshal the Hosts#! to focus on building military buildings, or #V None#! to leave such vassals with no directive."
  eotr_set_default_edict_tooltip:0 "Choose the fallback directive for vassals where no religion or culture rule applies."
  eotr_set_default_edict_confirm:0 "Set Default Edict"
 
  eotr_default_prosperity_label:0 "Foster Prosperity"
- eotr_default_prosperity_tooltip:0 "Fallback assigns [vassal_directive_building_focus_economy|E]."
+ eotr_default_prosperity_opt_tooltip:0 "Sets the Default Edict to the #V Foster Prosperity#! [directive|E]."
  eotr_default_prosperity_effect_tooltip:0 "Default Edict set to #V Foster Prosperity#!."
 
  eotr_default_bulwark_label:0 "Reinforce the Borders"
- eotr_default_bulwark_tooltip:0 "Fallback assigns [vassal_directive_building_focus_fortification|E]."
+ eotr_default_bulwark_opt_tooltip:0 "Sets the Default Edict to the #V Reinforce the Borders#! [directive|E]."
  eotr_default_bulwark_effect_tooltip:0 "Default Edict set to #V Reinforce the Borders#!."
 
  eotr_default_martial_label:0 "Marshal the Hosts"
- eotr_default_martial_tooltip:0 "Fallback assigns [vassal_directive_building_focus_military|E]."
+ eotr_default_martial_opt_tooltip:0 "Sets the Default Edict to the #V Marshal the Hosts#! [directive|E]."
  eotr_default_martial_effect_tooltip:0 "Default Edict set to #V Marshal the Hosts#!."
 
  eotr_default_none_label:0 "None"
- eotr_default_none_tooltip:0 "No fallback directive; affected vassals have any previous directive cleared."
+ eotr_default_none_opt_tooltip:0 "Sets the Default Edict to #V None#!."
  eotr_default_none_effect_tooltip:0 "Default Edict set to #V None#!."
 
  # Apply decision

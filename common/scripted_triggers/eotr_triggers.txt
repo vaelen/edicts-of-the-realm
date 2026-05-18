@@ -1,4 +1,4 @@
-# True if the character holds at least one county whose faith differs from
+﻿# True if the character holds at least one county whose faith differs from
 # the character's own faith. Used to decide whether vassal_directive_convert_faith
 # would have any work to do.
 eotr_has_faith_misaligned_county = {

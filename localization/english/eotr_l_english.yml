@@ -40,10 +40,12 @@
 
  eotr_priority_religion_label:0 "Religion First"
  eotr_priority_religion_opt_tooltip:0 "When both apply, the religion directive wins."
+ eotr_priority_religion_tooltip:0 "When both apply, the religion directive wins."
  eotr_priority_religion_effect_tooltip:0 "Priority set to #V Religion First#!."
 
  eotr_priority_culture_label:0 "Culture First"
  eotr_priority_culture_opt_tooltip:0 "When both apply, the culture directive wins."
+ eotr_priority_culture_tooltip:0 "When both apply, the culture directive wins."
  eotr_priority_culture_effect_tooltip:0 "Priority set to #V Culture First#!."
 
  # Default Edict decision
@@ -53,24 +55,28 @@
  eotr_set_default_edict_confirm:0 "Set Default Edict"
 
  eotr_default_prosperity_label:0 "Foster Prosperity"
+ eotr_default_prosperity_tooltip:0 "Sets the Default Edict to the #V Construct Economic Buildings#! [directive|E]."
  eotr_default_prosperity_opt_tooltip:0 "Sets the Default Edict to the #V Construct Economic Buildings#! [directive|E]."
  eotr_default_prosperity_effect_tooltip:0 "Default Edict set to #V Construct Economic Buildings#!."
 
  eotr_default_bulwark_label:0 "Reinforce the Borders"
+ eotr_default_bulwark_tooltip:0 "Sets the Default Edict to the #V Construct Fortification Buildings#! [directive|E]."
  eotr_default_bulwark_opt_tooltip:0 "Sets the Default Edict to the #V Construct Fortification Buildings#! [directive|E]."
  eotr_default_bulwark_effect_tooltip:0 "Default Edict set to #V Construct Fortification Buildings#!."
 
  eotr_default_martial_label:0 "Marshal the Hosts"
+ eotr_default_martial_tooltip:0 "Sets the Default Edict to the #V Construct Military Buildings#! [directive|E]."
  eotr_default_martial_opt_tooltip:0 "Sets the Default Edict to the #V Construct Military Buildings#! [directive|E]."
  eotr_default_martial_effect_tooltip:0 "Default Edict set to #V Construct Military Buildings#!."
 
  eotr_default_none_label:0 "None"
+ eotr_default_none_tooltip:0 "Sets the Default Edict to #V Remove Existing#! [directive|E]."
  eotr_default_none_opt_tooltip:0 "Sets the Default Edict to #V Remove Existing#! [directive|E]."
  eotr_default_none_effect_tooltip:0 "Default Edict set to #V Remove Existing#! [directive|E]."
 
  # Apply decision
  eotr_apply_directives:0 "Issue Directives to the Realm"
- eotr_apply_directives_desc:0 "Push your current Edicts of the Realm settings across every sub-realm vassal. Each vassal receives a directive matched to their faith, culture, and lands; vassals with nothing to do under your Religion or Culture policies receive your Default Edict (if any)."
- eotr_apply_directives_tooltip:0 "Apply your settings to every landed AI vassal in your sub-realm."
+ eotr_apply_directives_desc:0 "Present your edicts to the realm! Each vassal receives a directive matched to their faith, culture, and lands; vassals with nothing to do under your Religion or Culture policies receive your Default Edict (if any)."
+ eotr_apply_directives_tooltip:0 "Apply directives to every landed AI vassal in your realm."
  eotr_apply_directives_confirm:0 "Issue Directives"
- eotr_apply_directives_effect_tooltip:0 "Every landed AI vassal at or below county tier receives a directive based on your current Edicts of the Realm settings."
+ eotr_apply_directives_effect_tooltip:0 "Every landed AI vassal above county tier receives a directive based on your current Edicts of the Realm."

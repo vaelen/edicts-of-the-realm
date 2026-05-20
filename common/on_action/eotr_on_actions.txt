@@ -1,0 +1,172 @@
+﻿# Auto-application hooks. Active only for players who have set the
+# `eotr_auto_apply` flag via the "Automatic Application" setting decision.
+# All hooks gate on `top_liege.is_ai = no AND top_liege.has_character_flag =
+# eotr_auto_apply` so other players' (and AI characters') realms are untouched.
+
+# --- Yearly refresh ---
+# Fires once globally on January 1st. We iterate every player; for each one
+# with auto-apply on, save them as scope:eotr_player and re-evaluate their
+# entire sub-realm.
+yearly_global_pulse = {
+	effect = {
+		every_player = {
+			limit = {
+				is_landed = yes
+				has_character_flag = eotr_auto_apply
+			}
+			save_scope_as = eotr_player
+			eotr_apply_all_vassals_for_player = yes
+		}
+	}
+}
+
+# --- Title transferred ---
+# `on_title_gain` fires on the new holder; `on_title_lost` on the former
+# holder. Re-evaluate the affected character if they are still an eligible
+# sub-realm AI vassal of a player with auto-apply on. The loser case
+# matters because their misaligned-county set may have shrunk to zero —
+# a stale convert_culture/convert_faith should be cleared.
+on_title_gain = {
+	effect = {
+		if = {
+			limit = {
+				is_landed = yes
+				is_ai = yes
+				highest_held_title_tier >= tier_county
+				exists = liege
+				top_liege = {
+					is_ai = no
+					has_character_flag = eotr_auto_apply
+				}
+			}
+			top_liege = { save_scope_as = eotr_player }
+			eotr_evaluate_and_assign_directive = yes
+		}
+	}
+}
+
+on_title_lost = {
+	effect = {
+		if = {
+			limit = {
+				is_landed = yes
+				is_ai = yes
+				highest_held_title_tier >= tier_county
+				exists = liege
+				top_liege = {
+					is_ai = no
+					has_character_flag = eotr_auto_apply
+				}
+			}
+			top_liege = { save_scope_as = eotr_player }
+			eotr_evaluate_and_assign_directive = yes
+		}
+	}
+}
+
+# --- Character converts faith / culture ---
+# Two branches per hook:
+#   (a) An AI vassal converted — re-evaluate that vassal only.
+#   (b) The player converted — every "shares faith/culture with liege" check
+#       in the evaluator just inverted realm-wide, so re-apply to every
+#       vassal in their realm.
+on_character_faith_change = {
+	effect = {
+		if = {
+			limit = {
+				is_landed = yes
+				is_ai = yes
+				highest_held_title_tier >= tier_county
+				exists = liege
+				top_liege = {
+					is_ai = no
+					has_character_flag = eotr_auto_apply
+				}
+			}
+			top_liege = { save_scope_as = eotr_player }
+			eotr_evaluate_and_assign_directive = yes
+		}
+		else_if = {
+			limit = {
+				is_ai = no
+				is_landed = yes
+				has_character_flag = eotr_auto_apply
+			}
+			save_scope_as = eotr_player
+			eotr_apply_all_vassals_for_player = yes
+		}
+	}
+}
+
+on_character_culture_change = {
+	effect = {
+		if = {
+			limit = {
+				is_landed = yes
+				is_ai = yes
+				highest_held_title_tier >= tier_county
+				exists = liege
+				top_liege = {
+					is_ai = no
+					has_character_flag = eotr_auto_apply
+				}
+			}
+			top_liege = { save_scope_as = eotr_player }
+			eotr_evaluate_and_assign_directive = yes
+		}
+		else_if = {
+			limit = {
+				is_ai = no
+				is_landed = yes
+				has_character_flag = eotr_auto_apply
+			}
+			save_scope_as = eotr_player
+			eotr_apply_all_vassals_for_player = yes
+		}
+	}
+}
+
+# --- County converts faith / culture ---
+# Root is the county title. The holder may be a deep sub-vassal; the spec
+# asks us to re-evaluate the holder and every intermediate liege up to (but
+# not including) the player. eotr_walk_liege_chain_and_apply handles that.
+# Note: in vanilla 1.19 on_county_culture_change is documented but never
+# fires from base-game code — wiring it here is defensive against future
+# patches or other mods that trigger it.
+on_county_faith_change = {
+	effect = {
+		if = {
+			limit = {
+				exists = holder
+				holder = {
+					exists = top_liege
+					top_liege = {
+						is_ai = no
+						has_character_flag = eotr_auto_apply
+					}
+				}
+			}
+			holder.top_liege = { save_scope_as = eotr_player }
+			holder = { eotr_walk_liege_chain_and_apply = yes }
+		}
+	}
+}
+
+on_county_culture_change = {
+	effect = {
+		if = {
+			limit = {
+				exists = holder
+				holder = {
+					exists = top_liege
+					top_liege = {
+						is_ai = no
+						has_character_flag = eotr_auto_apply
+					}
+				}
+			}
+			holder.top_liege = { save_scope_as = eotr_player }
+			holder = { eotr_walk_liege_chain_and_apply = yes }
+		}
+	}
+}

@@ -1,4 +1,9 @@
-﻿# Per-vassal evaluator. Runs on the VASSAL scope; root = the player (liege).
+﻿# Per-vassal evaluator. Runs on the VASSAL scope; caller must have already
+# done `save_scope_as = eotr_player` on the player whose settings drive the
+# assignment. All reads of player-side eotr_* flags go through
+# `scope:eotr_player`, not `root` — root varies wildly across the on_action
+# call sites (county, vassal, or unset) so the saved scope is the only
+# stable handle on the player.
 #
 # Logic mirrors docs/superpowers/specs/2026-05-17-edicts-of-the-realm-design.md
 # Section 4 "Per-vassal evaluation algorithm".
@@ -12,8 +17,8 @@ eotr_evaluate_and_assign_directive = {
 	# never get convert_faith (it would spread heresy).
 	if = {
 		limit = {
-			root = { has_character_flag = eotr_religion_convert }
-			faith = root.faith
+			scope:eotr_player = { has_character_flag = eotr_religion_convert }
+			faith = scope:eotr_player.faith
 			eotr_has_faith_misaligned_county = yes
 		}
 		set_variable = { name = eotr_pick_religion_convert value = yes }
@@ -23,8 +28,8 @@ eotr_evaluate_and_assign_directive = {
 	# Convert path: only when vassal shares player's culture AND has a misaligned county.
 	if = {
 		limit = {
-			root = { has_character_flag = eotr_culture_convert }
-			culture = root.culture
+			scope:eotr_player = { has_character_flag = eotr_culture_convert }
+			culture = scope:eotr_player.culture
 			eotr_has_culture_misaligned_county = yes
 		}
 		set_variable = { name = eotr_pick_culture_convert value = yes }
@@ -32,7 +37,7 @@ eotr_evaluate_and_assign_directive = {
 	# Acceptance path: independent of liege's culture; only the vassal-vs-lands diversity matters.
 	else_if = {
 		limit = {
-			root = { has_character_flag = eotr_culture_accept }
+			scope:eotr_player = { has_character_flag = eotr_culture_accept }
 			eotr_has_culture_misaligned_county = yes
 		}
 		set_variable = { name = eotr_pick_culture_accept value = yes }
@@ -52,7 +57,7 @@ eotr_evaluate_and_assign_directive = {
 			}
 		}
 		if = {
-			limit = { root = { has_character_flag = eotr_priority_religion } }
+			limit = { scope:eotr_player = { has_character_flag = eotr_priority_religion } }
 			add_character_flag = vassal_directive_convert_faith
 		}
 		else = {
@@ -81,15 +86,15 @@ eotr_evaluate_and_assign_directive = {
 	else = {
 		# --- Default edict fallthrough ---
 		if = {
-			limit = { root = { has_character_flag = eotr_default_prosperity } }
+			limit = { scope:eotr_player = { has_character_flag = eotr_default_prosperity } }
 			add_character_flag = vassal_directive_building_focus_economy
 		}
 		else_if = {
-			limit = { root = { has_character_flag = eotr_default_bulwark } }
+			limit = { scope:eotr_player = { has_character_flag = eotr_default_bulwark } }
 			add_character_flag = vassal_directive_building_focus_fortification
 		}
 		else_if = {
-			limit = { root = { has_character_flag = eotr_default_martial } }
+			limit = { scope:eotr_player = { has_character_flag = eotr_default_martial } }
 			add_character_flag = vassal_directive_building_focus_military
 		}
 		# else: eotr_default_none or no default set -> leave cleared
@@ -99,4 +104,41 @@ eotr_evaluate_and_assign_directive = {
 	remove_variable = eotr_pick_religion_convert
 	remove_variable = eotr_pick_culture_convert
 	remove_variable = eotr_pick_culture_accept
+}
+
+# Runs on the PLAYER scope. Caller must have done `save_scope_as = eotr_player`
+# (this is the same player). Iterates every sub-realm AI vassal at >= county
+# tier and runs the per-vassal evaluator on each. Extracted so the on_actions
+# and the manual decision share the same iteration.
+eotr_apply_all_vassals_for_player = {
+	every_vassal_or_below = {
+		limit = {
+			is_landed = yes
+			is_ai = yes
+			highest_held_title_tier >= tier_county
+		}
+		eotr_evaluate_and_assign_directive = yes
+	}
+}
+
+# Recursive walker. Used by on_county_faith_change / on_county_culture_change:
+# the county's holder may be a deep sub-vassal whose own liege may also want
+# re-evaluation. Stops walking once liege is no longer an AI (i.e. we've
+# reached the player). Caller must have saved scope:eotr_player.
+eotr_walk_liege_chain_and_apply = {
+	if = {
+		limit = {
+			is_landed = yes
+			is_ai = yes
+			highest_held_title_tier >= tier_county
+		}
+		eotr_evaluate_and_assign_directive = yes
+	}
+	if = {
+		limit = {
+			exists = liege
+			liege = { is_ai = yes }
+		}
+		liege = { eotr_walk_liege_chain_and_apply = yes }
+	}
 }

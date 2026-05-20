@@ -37,6 +37,12 @@ eotr_view_settings = {
 			triggered_desc = { trigger = { has_character_flag = eotr_default_none } desc = eotr_view_default_none }
 			triggered_desc = { trigger = { always = yes } desc = eotr_view_default_unset }
 		}
+
+		desc = eotr_view_auto_apply_label
+		first_valid = {
+			triggered_desc = { trigger = { has_character_flag = eotr_auto_apply } desc = eotr_view_auto_apply_on }
+			triggered_desc = { trigger = { always = yes } desc = eotr_view_auto_apply_off }
+		}
 	}
 
 	selection_tooltip = eotr_view_settings_tooltip
@@ -305,6 +311,64 @@ eotr_set_default_edict = {
 	ai_check_interval = 0
 }
 
+# Setting 5 of 5: Automatic Application
+# Master toggle for the on_action-driven auto-apply system. When ON, directives
+# are re-evaluated on yearly tick, on title transfers, and on faith/culture
+# changes (character or county). Picking ON also runs an immediate full apply.
+eotr_set_auto_apply = {
+	picture = { reference = "gfx/interface/illustrations/decisions/fp2_decision_struggle_compromise.dds" }
+	decision_group_type = eotr_realm_directives
+
+	desc = eotr_set_auto_apply_desc
+	selection_tooltip = eotr_set_auto_apply_tooltip
+	confirm_text = eotr_set_auto_apply_confirm
+
+	is_shown = {
+		is_landed = yes
+		is_ai = no
+	}
+
+	is_valid_showing_failures_only = {}
+
+	widget = {
+		gui = "decision_view_widget_decision_option_list_controller"
+		controller = decision_option_list_controller
+
+		item = {
+			value = eotr_auto_apply_on_opt
+			current_description = eotr_auto_apply_on_tooltip
+			localization = eotr_auto_apply_on_label
+		}
+		item = {
+			value = eotr_auto_apply_off_opt
+			current_description = eotr_auto_apply_off_tooltip
+			localization = eotr_auto_apply_off_label
+		}
+	}
+
+	effect = {
+		remove_character_flag = eotr_auto_apply
+
+		if = {
+			limit = { scope:eotr_auto_apply_on_opt = yes }
+			custom_tooltip = eotr_auto_apply_on_effect_tooltip
+			add_character_flag = eotr_auto_apply
+			# Immediate apply per spec — toggle ON triggers a one-shot full apply.
+			save_scope_as = eotr_player
+			eotr_apply_all_vassals_for_player = yes
+		}
+		else_if = {
+			limit = { scope:eotr_auto_apply_off_opt = yes }
+			custom_tooltip = eotr_auto_apply_off_effect_tooltip
+			# Flag already removed above. Existing vassal directives are left
+			# in place — turning auto off doesn't strip prior assignments.
+		}
+	}
+
+	ai_will_do = { base = 0 }
+	ai_check_interval = 0
+}
+
 # Action: Issue Directives to the Realm
 # Iterates every sub-realm vassal (cascading through tiers) and invokes the
 # evaluator on each. Hidden when the player has no matching vassals.
@@ -330,14 +394,8 @@ eotr_apply_directives = {
 
 	effect = {
 		custom_tooltip = eotr_apply_directives_effect_tooltip
-		every_vassal_or_below = {
-			limit = {
-				is_landed = yes
-				is_ai = yes
-				highest_held_title_tier >= tier_county
-			}
-			eotr_evaluate_and_assign_directive = yes
-		}
+		save_scope_as = eotr_player
+		eotr_apply_all_vassals_for_player = yes
 	}
 
 	ai_will_do = { base = 0 }

@@ -29,6 +29,10 @@
  eotr_view_default_none:0 "#V None#!\n"
  eotr_view_default_unset:0 "Not set\n"
 
+ eotr_view_auto_apply_label:0 "Automatic Application: "
+ eotr_view_auto_apply_on:0 "#V On#!\n"
+ eotr_view_auto_apply_off:0 "#V Off#!\n"
+
  # Religion Policy decision
  eotr_set_religion_policy:0 "Set Religion Policy"
  eotr_set_religion_policy_desc:0 "Decide how your vassals should handle religion across the realm. Choose #V Convert#! to push your faith into counties of other faiths. This directive will only be given to vassals who share your faith and control counties with differing faiths. Choose #V None#! to ignore religion entirely."
@@ -101,6 +105,20 @@
  eotr_default_none_tooltip:0 "Sets the Default Edict to #V Remove Existing#! [directive|E]."
  eotr_default_none_opt_tooltip:0 "Sets the Default Edict to #V Remove Existing#! [directive|E]."
  eotr_default_none_effect_tooltip:0 "Default Edict set to #V Remove Existing#! [directive|E]."
+
+ # Automatic Application decision
+ eotr_set_auto_apply:0 "Set Automatic Application"
+ eotr_set_auto_apply_desc:0 "When enabled, vassal directives are re-evaluated automatically: every year on January 1st, whenever a title is gained or lost (inheritance, grant, conquest, revocation), whenever a vassal converts faith or culture, whenever you convert faith or culture, and whenever a county in your realm changes faith or culture. Turning this on also runs an immediate full apply. Turning it off leaves existing directives in place — it only stops the automatic refreshes."
+ eotr_set_auto_apply_tooltip:0 "Toggle automatic re-evaluation of vassal directives on realm changes."
+ eotr_set_auto_apply_confirm:0 "Set Automatic Application"
+
+ eotr_auto_apply_on_label:0 "On"
+ eotr_auto_apply_on_tooltip:0 "Directives are re-evaluated automatically on yearly tick, title transfers, and faith/culture changes. Picking this option also runs an immediate full apply."
+ eotr_auto_apply_on_effect_tooltip:0 "Automatic Application set to #V On#! — directives applied immediately and will refresh automatically going forward."
+
+ eotr_auto_apply_off_label:0 "Off"
+ eotr_auto_apply_off_tooltip:0 "Directives are only updated when you manually run #V Issue Directives to the Realm#!. Existing directives stay assigned."
+ eotr_auto_apply_off_effect_tooltip:0 "Automatic Application set to #V Off#! — existing directives are left in place."
 
  # Apply decision
  eotr_apply_directives:0 "Issue Directives to the Realm"

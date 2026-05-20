@@ -94,18 +94,19 @@ eotr_set_religion_policy = {
 		# Clear any prior selection in this category
 		remove_character_flag = eotr_religion_convert
 
-		# Apply the chosen option
-		switch = {
-			trigger = yes
-
-			scope:eotr_religion_policy_convert ?= {
-				custom_tooltip = eotr_religion_policy_convert_effect_tooltip
-				add_character_flag = eotr_religion_convert
-			}
-			scope:eotr_religion_policy_none ?= {
-				custom_tooltip = eotr_religion_policy_none_effect_tooltip
-				# Nothing to add — already cleared
-			}
+		# Apply the chosen option. Must use `if + limit = { scope:X = yes }`
+		# rather than `scope:X ?= { ... }`: the latter shifts scope into the
+		# option-list boolean tag, which is not a character, so add_character_flag
+		# silently fails to persist.
+		if = {
+			limit = { scope:eotr_religion_policy_convert = yes }
+			custom_tooltip = eotr_religion_policy_convert_effect_tooltip
+			add_character_flag = eotr_religion_convert
+		}
+		else_if = {
+			limit = { scope:eotr_religion_policy_none = yes }
+			custom_tooltip = eotr_religion_policy_none_effect_tooltip
+			# Nothing to add — already cleared
 		}
 	}
 
@@ -155,20 +156,19 @@ eotr_set_culture_policy = {
 		remove_character_flag = eotr_culture_convert
 		remove_character_flag = eotr_culture_accept
 
-		switch = {
-			trigger = yes
-
-			scope:eotr_culture_policy_convert ?= {
-				custom_tooltip = eotr_culture_policy_convert_effect_tooltip
-				add_character_flag = eotr_culture_convert
-			}
-			scope:eotr_culture_policy_accept ?= {
-				custom_tooltip = eotr_culture_policy_accept_effect_tooltip
-				add_character_flag = eotr_culture_accept
-			}
-			scope:eotr_culture_policy_none ?= {
-				custom_tooltip = eotr_culture_policy_none_effect_tooltip
-			}
+		if = {
+			limit = { scope:eotr_culture_policy_convert = yes }
+			custom_tooltip = eotr_culture_policy_convert_effect_tooltip
+			add_character_flag = eotr_culture_convert
+		}
+		else_if = {
+			limit = { scope:eotr_culture_policy_accept = yes }
+			custom_tooltip = eotr_culture_policy_accept_effect_tooltip
+			add_character_flag = eotr_culture_accept
+		}
+		else_if = {
+			limit = { scope:eotr_culture_policy_none = yes }
+			custom_tooltip = eotr_culture_policy_none_effect_tooltip
 		}
 	}
 
@@ -213,17 +213,15 @@ eotr_set_priority = {
 		remove_character_flag = eotr_priority_religion
 		remove_character_flag = eotr_priority_culture
 
-		switch = {
-			trigger = yes
-
-			scope:eotr_priority_religion_opt ?= {
-				custom_tooltip = eotr_priority_religion_effect_tooltip
-				add_character_flag = eotr_priority_religion
-			}
-			scope:eotr_priority_culture_opt ?= {
-				custom_tooltip = eotr_priority_culture_effect_tooltip
-				add_character_flag = eotr_priority_culture
-			}
+		if = {
+			limit = { scope:eotr_priority_religion_opt = yes }
+			custom_tooltip = eotr_priority_religion_effect_tooltip
+			add_character_flag = eotr_priority_religion
+		}
+		else_if = {
+			limit = { scope:eotr_priority_culture_opt = yes }
+			custom_tooltip = eotr_priority_culture_effect_tooltip
+			add_character_flag = eotr_priority_culture
 		}
 	}
 
@@ -281,25 +279,25 @@ eotr_set_default_edict = {
 		remove_character_flag = eotr_default_martial
 		remove_character_flag = eotr_default_none
 
-		switch = {
-			trigger = yes
-
-			scope:eotr_default_prosperity_opt ?= {
-				custom_tooltip = eotr_default_prosperity_effect_tooltip
-				add_character_flag = eotr_default_prosperity
-			}
-			scope:eotr_default_bulwark_opt ?= {
-				custom_tooltip = eotr_default_bulwark_effect_tooltip
-				add_character_flag = eotr_default_bulwark
-			}
-			scope:eotr_default_martial_opt ?= {
-				custom_tooltip = eotr_default_martial_effect_tooltip
-				add_character_flag = eotr_default_martial
-			}
-			scope:eotr_default_none_opt ?= {
-				custom_tooltip = eotr_default_none_effect_tooltip
-				add_character_flag = eotr_default_none
-			}
+		if = {
+			limit = { scope:eotr_default_prosperity_opt = yes }
+			custom_tooltip = eotr_default_prosperity_effect_tooltip
+			add_character_flag = eotr_default_prosperity
+		}
+		else_if = {
+			limit = { scope:eotr_default_bulwark_opt = yes }
+			custom_tooltip = eotr_default_bulwark_effect_tooltip
+			add_character_flag = eotr_default_bulwark
+		}
+		else_if = {
+			limit = { scope:eotr_default_martial_opt = yes }
+			custom_tooltip = eotr_default_martial_effect_tooltip
+			add_character_flag = eotr_default_martial
+		}
+		else_if = {
+			limit = { scope:eotr_default_none_opt = yes }
+			custom_tooltip = eotr_default_none_effect_tooltip
+			add_character_flag = eotr_default_none
 		}
 	}
 

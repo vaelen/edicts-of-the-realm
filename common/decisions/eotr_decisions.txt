@@ -1,4 +1,63 @@
-﻿# Setting 1 of 4: Religion Policy
+﻿# Read-only view of the current configuration.
+# Reads the player's eotr_* character flags and renders a four-line summary
+# of which option (if any) is selected for each setting. Confirming closes
+# the panel with no side effects.
+eotr_view_settings = {
+	picture = { reference = "gfx/interface/illustrations/decisions/fp2_decision_struggle_compromise.dds" }
+	decision_group_type = eotr_realm_directives
+
+	desc = {
+		desc = eotr_view_settings_intro
+
+		desc = eotr_view_religion_label
+		first_valid = {
+			triggered_desc = { trigger = { has_character_flag = eotr_religion_convert } desc = eotr_view_religion_convert }
+			triggered_desc = { trigger = { always = yes } desc = eotr_view_religion_none }
+		}
+
+		desc = eotr_view_culture_label
+		first_valid = {
+			triggered_desc = { trigger = { has_character_flag = eotr_culture_convert } desc = eotr_view_culture_convert }
+			triggered_desc = { trigger = { has_character_flag = eotr_culture_accept } desc = eotr_view_culture_accept }
+			triggered_desc = { trigger = { always = yes } desc = eotr_view_culture_none }
+		}
+
+		desc = eotr_view_priority_label
+		first_valid = {
+			triggered_desc = { trigger = { has_character_flag = eotr_priority_religion } desc = eotr_view_priority_religion }
+			triggered_desc = { trigger = { has_character_flag = eotr_priority_culture } desc = eotr_view_priority_culture }
+			triggered_desc = { trigger = { always = yes } desc = eotr_view_priority_none }
+		}
+
+		desc = eotr_view_default_label
+		first_valid = {
+			triggered_desc = { trigger = { has_character_flag = eotr_default_prosperity } desc = eotr_view_default_prosperity }
+			triggered_desc = { trigger = { has_character_flag = eotr_default_bulwark } desc = eotr_view_default_bulwark }
+			triggered_desc = { trigger = { has_character_flag = eotr_default_martial } desc = eotr_view_default_martial }
+			triggered_desc = { trigger = { has_character_flag = eotr_default_none } desc = eotr_view_default_none }
+			triggered_desc = { trigger = { always = yes } desc = eotr_view_default_unset }
+		}
+	}
+
+	selection_tooltip = eotr_view_settings_tooltip
+	confirm_text = eotr_view_settings_confirm
+
+	is_shown = {
+		is_landed = yes
+		is_ai = no
+	}
+
+	is_valid_showing_failures_only = {}
+
+	effect = {
+		custom_tooltip = eotr_view_settings_effect_tooltip
+	}
+
+	ai_will_do = { base = 0 }
+	ai_check_interval = 0
+}
+
+# Setting 1 of 4: Religion Policy
 # Toggles the eotr_religion_convert character flag on the player.
 eotr_set_religion_policy = {
 	picture = { reference = "gfx/interface/illustrations/decisions/fp2_decision_struggle_compromise.dds" }

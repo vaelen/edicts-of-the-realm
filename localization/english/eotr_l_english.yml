@@ -1,6 +1,34 @@
 ﻿l_english:
  decision_group_type_eotr_realm_directives:0 "Edicts of the Realm"
 
+ # View Current Settings — read-only viewer of the active configuration
+ eotr_view_settings:0 "View Current Settings"
+ eotr_view_settings_intro:0 "Current Edicts of the Realm configuration:\n"
+ eotr_view_settings_tooltip:0 "Display the currently selected policy options without changing anything."
+ eotr_view_settings_confirm:0 "Close"
+ eotr_view_settings_effect_tooltip:0 "No changes are made — this view is read-only."
+
+ eotr_view_religion_label:0 "Religion Policy: "
+ eotr_view_religion_convert:0 "#V Convert#!\n"
+ eotr_view_religion_none:0 "Not set\n"
+
+ eotr_view_culture_label:0 "Culture Policy: "
+ eotr_view_culture_convert:0 "#V Convert#!\n"
+ eotr_view_culture_accept:0 "#V Acceptance#!\n"
+ eotr_view_culture_none:0 "Not set\n"
+
+ eotr_view_priority_label:0 "Conflict Priority: "
+ eotr_view_priority_religion:0 "#V Religion First#!\n"
+ eotr_view_priority_culture:0 "#V Culture First#!\n"
+ eotr_view_priority_none:0 "Not set\n"
+
+ eotr_view_default_label:0 "Default Edict: "
+ eotr_view_default_prosperity:0 "#V Foster Prosperity#!\n"
+ eotr_view_default_bulwark:0 "#V Reinforce the Borders#!\n"
+ eotr_view_default_martial:0 "#V Marshal the Hosts#!\n"
+ eotr_view_default_none:0 "#V None#!\n"
+ eotr_view_default_unset:0 "Not set\n"
+
  # Religion Policy decision
  eotr_set_religion_policy:0 "Set Religion Policy"
  eotr_set_religion_policy_desc:0 "Decide how your vassals should handle religion across the realm. Choose #V Convert#! to push your faith into counties of other faiths. This directive will only be given to vassals who share your faith and control counties with differing faiths. Choose #V None#! to ignore religion entirely."

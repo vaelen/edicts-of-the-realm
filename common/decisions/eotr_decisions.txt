@@ -11,36 +11,36 @@ eotr_view_settings = {
 
 		desc = eotr_view_religion_label
 		first_valid = {
-			triggered_desc = { trigger = { has_character_flag = eotr_religion_convert } desc = eotr_view_religion_convert }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_religion_convert } } desc = eotr_view_religion_convert }
 			triggered_desc = { trigger = { always = yes } desc = eotr_view_religion_none }
 		}
 
 		desc = eotr_view_culture_label
 		first_valid = {
-			triggered_desc = { trigger = { has_character_flag = eotr_culture_convert } desc = eotr_view_culture_convert }
-			triggered_desc = { trigger = { has_character_flag = eotr_culture_accept } desc = eotr_view_culture_accept }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_culture_convert } } desc = eotr_view_culture_convert }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_culture_accept } } desc = eotr_view_culture_accept }
 			triggered_desc = { trigger = { always = yes } desc = eotr_view_culture_none }
 		}
 
 		desc = eotr_view_priority_label
 		first_valid = {
-			triggered_desc = { trigger = { has_character_flag = eotr_priority_religion } desc = eotr_view_priority_religion }
-			triggered_desc = { trigger = { has_character_flag = eotr_priority_culture } desc = eotr_view_priority_culture }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_priority_religion } } desc = eotr_view_priority_religion }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_priority_culture } } desc = eotr_view_priority_culture }
 			triggered_desc = { trigger = { always = yes } desc = eotr_view_priority_none }
 		}
 
 		desc = eotr_view_default_label
 		first_valid = {
-			triggered_desc = { trigger = { has_character_flag = eotr_default_prosperity } desc = eotr_view_default_prosperity }
-			triggered_desc = { trigger = { has_character_flag = eotr_default_bulwark } desc = eotr_view_default_bulwark }
-			triggered_desc = { trigger = { has_character_flag = eotr_default_martial } desc = eotr_view_default_martial }
-			triggered_desc = { trigger = { has_character_flag = eotr_default_none } desc = eotr_view_default_none }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_default_prosperity } } desc = eotr_view_default_prosperity }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_default_bulwark } } desc = eotr_view_default_bulwark }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_default_martial } } desc = eotr_view_default_martial }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_default_none } } desc = eotr_view_default_none }
 			triggered_desc = { trigger = { always = yes } desc = eotr_view_default_unset }
 		}
 
 		desc = eotr_view_auto_apply_label
 		first_valid = {
-			triggered_desc = { trigger = { has_character_flag = eotr_auto_apply } desc = eotr_view_auto_apply_on }
+			triggered_desc = { trigger = { primary_title = { has_variable = eotr_auto_apply } } desc = eotr_view_auto_apply_on }
 			triggered_desc = { trigger = { always = yes } desc = eotr_view_auto_apply_off }
 		}
 	}
@@ -97,17 +97,19 @@ eotr_set_religion_policy = {
 	}
 
 	effect = {
-		# Clear any prior selection in this category
-		remove_character_flag = eotr_religion_convert
+		# Clear any prior selection in this category. Settings persist as
+		# variables on the player's primary title (not character flags) so they
+		# survive succession — the heir inherits the title and its variables.
+		primary_title = { remove_variable = eotr_religion_convert }
 
 		# Apply the chosen option. Must use `if + limit = { scope:X = yes }`
 		# rather than `scope:X ?= { ... }`: the latter shifts scope into the
-		# option-list boolean tag, which is not a character, so add_character_flag
+		# option-list boolean tag, which is not a character, so the write
 		# silently fails to persist.
 		if = {
 			limit = { scope:eotr_religion_policy_convert = yes }
 			custom_tooltip = eotr_religion_policy_convert_effect_tooltip
-			add_character_flag = eotr_religion_convert
+			primary_title = { set_variable = eotr_religion_convert }
 		}
 		else_if = {
 			limit = { scope:eotr_religion_policy_none = yes }
@@ -159,18 +161,20 @@ eotr_set_culture_policy = {
 	}
 
 	effect = {
-		remove_character_flag = eotr_culture_convert
-		remove_character_flag = eotr_culture_accept
+		primary_title = {
+			remove_variable = eotr_culture_convert
+			remove_variable = eotr_culture_accept
+		}
 
 		if = {
 			limit = { scope:eotr_culture_policy_convert = yes }
 			custom_tooltip = eotr_culture_policy_convert_effect_tooltip
-			add_character_flag = eotr_culture_convert
+			primary_title = { set_variable = eotr_culture_convert }
 		}
 		else_if = {
 			limit = { scope:eotr_culture_policy_accept = yes }
 			custom_tooltip = eotr_culture_policy_accept_effect_tooltip
-			add_character_flag = eotr_culture_accept
+			primary_title = { set_variable = eotr_culture_accept }
 		}
 		else_if = {
 			limit = { scope:eotr_culture_policy_none = yes }
@@ -216,18 +220,20 @@ eotr_set_priority = {
 	}
 
 	effect = {
-		remove_character_flag = eotr_priority_religion
-		remove_character_flag = eotr_priority_culture
+		primary_title = {
+			remove_variable = eotr_priority_religion
+			remove_variable = eotr_priority_culture
+		}
 
 		if = {
 			limit = { scope:eotr_priority_religion_opt = yes }
 			custom_tooltip = eotr_priority_religion_effect_tooltip
-			add_character_flag = eotr_priority_religion
+			primary_title = { set_variable = eotr_priority_religion }
 		}
 		else_if = {
 			limit = { scope:eotr_priority_culture_opt = yes }
 			custom_tooltip = eotr_priority_culture_effect_tooltip
-			add_character_flag = eotr_priority_culture
+			primary_title = { set_variable = eotr_priority_culture }
 		}
 	}
 
@@ -280,30 +286,32 @@ eotr_set_default_edict = {
 	}
 
 	effect = {
-		remove_character_flag = eotr_default_prosperity
-		remove_character_flag = eotr_default_bulwark
-		remove_character_flag = eotr_default_martial
-		remove_character_flag = eotr_default_none
+		primary_title = {
+			remove_variable = eotr_default_prosperity
+			remove_variable = eotr_default_bulwark
+			remove_variable = eotr_default_martial
+			remove_variable = eotr_default_none
+		}
 
 		if = {
 			limit = { scope:eotr_default_prosperity_opt = yes }
 			custom_tooltip = eotr_default_prosperity_effect_tooltip
-			add_character_flag = eotr_default_prosperity
+			primary_title = { set_variable = eotr_default_prosperity }
 		}
 		else_if = {
 			limit = { scope:eotr_default_bulwark_opt = yes }
 			custom_tooltip = eotr_default_bulwark_effect_tooltip
-			add_character_flag = eotr_default_bulwark
+			primary_title = { set_variable = eotr_default_bulwark }
 		}
 		else_if = {
 			limit = { scope:eotr_default_martial_opt = yes }
 			custom_tooltip = eotr_default_martial_effect_tooltip
-			add_character_flag = eotr_default_martial
+			primary_title = { set_variable = eotr_default_martial }
 		}
 		else_if = {
 			limit = { scope:eotr_default_none_opt = yes }
 			custom_tooltip = eotr_default_none_effect_tooltip
-			add_character_flag = eotr_default_none
+			primary_title = { set_variable = eotr_default_none }
 		}
 	}
 
@@ -347,12 +355,12 @@ eotr_set_auto_apply = {
 	}
 
 	effect = {
-		remove_character_flag = eotr_auto_apply
+		primary_title = { remove_variable = eotr_auto_apply }
 
 		if = {
 			limit = { scope:eotr_auto_apply_on_opt = yes }
 			custom_tooltip = eotr_auto_apply_on_effect_tooltip
-			add_character_flag = eotr_auto_apply
+			primary_title = { set_variable = eotr_auto_apply }
 			# Immediate apply per spec — toggle ON triggers a one-shot full apply.
 			save_scope_as = eotr_player
 			eotr_apply_all_vassals_for_player = yes

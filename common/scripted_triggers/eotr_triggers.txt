@@ -15,3 +15,22 @@ eotr_has_culture_misaligned_county = {
 		NOT = { culture = prev.culture }
 	}
 }
+
+# True if this TITLE carries any of the player's eotr_* setting variables.
+# Settings live on the player's primary title; this is the cheap gate used by
+# the on_primary_title_change migration to tell whether a title holds settings
+# worth copying. Runs on a landed-title scope.
+eotr_title_has_settings = {
+	OR = {
+		has_variable = eotr_religion_convert
+		has_variable = eotr_culture_convert
+		has_variable = eotr_culture_accept
+		has_variable = eotr_priority_religion
+		has_variable = eotr_priority_culture
+		has_variable = eotr_default_prosperity
+		has_variable = eotr_default_bulwark
+		has_variable = eotr_default_martial
+		has_variable = eotr_default_none
+		has_variable = eotr_auto_apply
+	}
+}

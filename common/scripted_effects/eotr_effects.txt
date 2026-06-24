@@ -17,7 +17,7 @@ eotr_evaluate_and_assign_directive = {
 	# never get convert_faith (it would spread heresy).
 	if = {
 		limit = {
-			scope:eotr_player = { has_character_flag = eotr_religion_convert }
+			scope:eotr_player = { primary_title = { has_variable = eotr_religion_convert } }
 			faith = scope:eotr_player.faith
 			eotr_has_faith_misaligned_county = yes
 		}
@@ -28,7 +28,7 @@ eotr_evaluate_and_assign_directive = {
 	# Convert path: only when vassal shares player's culture AND has a misaligned county.
 	if = {
 		limit = {
-			scope:eotr_player = { has_character_flag = eotr_culture_convert }
+			scope:eotr_player = { primary_title = { has_variable = eotr_culture_convert } }
 			culture = scope:eotr_player.culture
 			eotr_has_culture_misaligned_county = yes
 		}
@@ -37,7 +37,7 @@ eotr_evaluate_and_assign_directive = {
 	# Acceptance path: independent of liege's culture; only the vassal-vs-lands diversity matters.
 	else_if = {
 		limit = {
-			scope:eotr_player = { has_character_flag = eotr_culture_accept }
+			scope:eotr_player = { primary_title = { has_variable = eotr_culture_accept } }
 			eotr_has_culture_misaligned_county = yes
 		}
 		set_variable = { name = eotr_pick_culture_accept value = yes }
@@ -57,7 +57,7 @@ eotr_evaluate_and_assign_directive = {
 			}
 		}
 		if = {
-			limit = { scope:eotr_player = { has_character_flag = eotr_priority_religion } }
+			limit = { scope:eotr_player = { primary_title = { has_variable = eotr_priority_religion } } }
 			add_character_flag = vassal_directive_convert_faith
 		}
 		else = {
@@ -86,15 +86,15 @@ eotr_evaluate_and_assign_directive = {
 	else = {
 		# --- Default edict fallthrough ---
 		if = {
-			limit = { scope:eotr_player = { has_character_flag = eotr_default_prosperity } }
+			limit = { scope:eotr_player = { primary_title = { has_variable = eotr_default_prosperity } } }
 			add_character_flag = vassal_directive_building_focus_economy
 		}
 		else_if = {
-			limit = { scope:eotr_player = { has_character_flag = eotr_default_bulwark } }
+			limit = { scope:eotr_player = { primary_title = { has_variable = eotr_default_bulwark } } }
 			add_character_flag = vassal_directive_building_focus_fortification
 		}
 		else_if = {
-			limit = { scope:eotr_player = { has_character_flag = eotr_default_martial } }
+			limit = { scope:eotr_player = { primary_title = { has_variable = eotr_default_martial } } }
 			add_character_flag = vassal_directive_building_focus_military
 		}
 		# else: eotr_default_none or no default set -> leave cleared
@@ -140,5 +140,44 @@ eotr_walk_liege_chain_and_apply = {
 			liege = { is_ai = yes }
 		}
 		liege = { eotr_walk_liege_chain_and_apply = yes }
+	}
+}
+
+# Moves the player's setting variables from scope:previous_title (the prior
+# primary title) onto root's current primary_title, then clears the source.
+# This is what makes settings follow the player across a PRIMARY TITLE change
+# (e.g. forming an empire), not just ordinary father->son succession (which is
+# already handled for free because the heir inherits the primary title itself).
+#
+# Runs on the CHARACTER scope. The only caller is on_primary_title_change, which
+# provides root = character and scope:previous_title = the old primary title.
+# Each variable is copied only if present on the source, so unset settings stay
+# unset rather than being forced to a default.
+eotr_migrate_settings_to_primary_title = {
+	primary_title = {
+		if = { limit = { scope:previous_title = { has_variable = eotr_religion_convert } }   set_variable = eotr_religion_convert }
+		if = { limit = { scope:previous_title = { has_variable = eotr_culture_convert } }     set_variable = eotr_culture_convert }
+		if = { limit = { scope:previous_title = { has_variable = eotr_culture_accept } }      set_variable = eotr_culture_accept }
+		if = { limit = { scope:previous_title = { has_variable = eotr_priority_religion } }   set_variable = eotr_priority_religion }
+		if = { limit = { scope:previous_title = { has_variable = eotr_priority_culture } }    set_variable = eotr_priority_culture }
+		if = { limit = { scope:previous_title = { has_variable = eotr_default_prosperity } }  set_variable = eotr_default_prosperity }
+		if = { limit = { scope:previous_title = { has_variable = eotr_default_bulwark } }     set_variable = eotr_default_bulwark }
+		if = { limit = { scope:previous_title = { has_variable = eotr_default_martial } }     set_variable = eotr_default_martial }
+		if = { limit = { scope:previous_title = { has_variable = eotr_default_none } }        set_variable = eotr_default_none }
+		if = { limit = { scope:previous_title = { has_variable = eotr_auto_apply } }          set_variable = eotr_auto_apply }
+	}
+	# Clear the old title so stale settings can't resurrect if it ever becomes
+	# primary again.
+	scope:previous_title = {
+		remove_variable = eotr_religion_convert
+		remove_variable = eotr_culture_convert
+		remove_variable = eotr_culture_accept
+		remove_variable = eotr_priority_religion
+		remove_variable = eotr_priority_culture
+		remove_variable = eotr_default_prosperity
+		remove_variable = eotr_default_bulwark
+		remove_variable = eotr_default_martial
+		remove_variable = eotr_default_none
+		remove_variable = eotr_auto_apply
 	}
 }

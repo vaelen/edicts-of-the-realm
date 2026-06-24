@@ -12,7 +12,7 @@ yearly_global_pulse = {
 		every_player = {
 			limit = {
 				is_landed = yes
-				has_character_flag = eotr_auto_apply
+				primary_title = { has_variable = eotr_auto_apply }
 			}
 			save_scope_as = eotr_player
 			eotr_apply_all_vassals_for_player = yes
@@ -36,7 +36,7 @@ on_title_gain = {
 				exists = liege
 				top_liege = {
 					is_ai = no
-					has_character_flag = eotr_auto_apply
+					primary_title = { has_variable = eotr_auto_apply }
 				}
 			}
 			top_liege = { save_scope_as = eotr_player }
@@ -55,7 +55,7 @@ on_title_lost = {
 				exists = liege
 				top_liege = {
 					is_ai = no
-					has_character_flag = eotr_auto_apply
+					primary_title = { has_variable = eotr_auto_apply }
 				}
 			}
 			top_liege = { save_scope_as = eotr_player }
@@ -80,7 +80,7 @@ on_character_faith_change = {
 				exists = liege
 				top_liege = {
 					is_ai = no
-					has_character_flag = eotr_auto_apply
+					primary_title = { has_variable = eotr_auto_apply }
 				}
 			}
 			top_liege = { save_scope_as = eotr_player }
@@ -90,7 +90,7 @@ on_character_faith_change = {
 			limit = {
 				is_ai = no
 				is_landed = yes
-				has_character_flag = eotr_auto_apply
+				primary_title = { has_variable = eotr_auto_apply }
 			}
 			save_scope_as = eotr_player
 			eotr_apply_all_vassals_for_player = yes
@@ -108,7 +108,7 @@ on_character_culture_change = {
 				exists = liege
 				top_liege = {
 					is_ai = no
-					has_character_flag = eotr_auto_apply
+					primary_title = { has_variable = eotr_auto_apply }
 				}
 			}
 			top_liege = { save_scope_as = eotr_player }
@@ -118,7 +118,7 @@ on_character_culture_change = {
 			limit = {
 				is_ai = no
 				is_landed = yes
-				has_character_flag = eotr_auto_apply
+				primary_title = { has_variable = eotr_auto_apply }
 			}
 			save_scope_as = eotr_player
 			eotr_apply_all_vassals_for_player = yes
@@ -142,7 +142,7 @@ on_county_faith_change = {
 					exists = top_liege
 					top_liege = {
 						is_ai = no
-						has_character_flag = eotr_auto_apply
+						primary_title = { has_variable = eotr_auto_apply }
 					}
 				}
 			}
@@ -161,12 +161,39 @@ on_county_culture_change = {
 					exists = top_liege
 					top_liege = {
 						is_ai = no
-						has_character_flag = eotr_auto_apply
+						primary_title = { has_variable = eotr_auto_apply }
 					}
 				}
 			}
 			holder.top_liege = { save_scope_as = eotr_player }
 			holder = { eotr_walk_liege_chain_and_apply = yes }
+		}
+	}
+}
+
+# --- Primary title changed ---
+# Settings live on the player's primary title so they survive ordinary
+# succession for free (the heir inherits the title). But if the player's PRIMARY
+# title itself changes — e.g. forming an empire, where a higher title becomes
+# primary while the old one is kept as a secondary — the settings would be
+# stranded on the now-secondary title. This hook moves them onto the new primary.
+#
+# Vanilla contract (see title_on_actions.txt): root = character,
+# scope:previous_title = the previous primary title, and it is never called when
+# the new primary equals the old one. We act only for landed players whose old
+# primary actually held settings and whose new primary doesn't already have its
+# own (so we never clobber an existing configuration).
+on_primary_title_change = {
+	effect = {
+		if = {
+			limit = {
+				is_landed = yes
+				is_ai = no
+				exists = scope:previous_title
+				scope:previous_title = { eotr_title_has_settings = yes }
+				NOT = { primary_title = { eotr_title_has_settings = yes } }
+			}
+			eotr_migrate_settings_to_primary_title = yes
 		}
 	}
 }

@@ -4,6 +4,14 @@ All notable changes to **Edicts of the Realm** are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this mod adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-06-24
+
+### Changed
+- **Settings now survive succession.** Previously the four policy settings and the Automatic Application toggle were stored as character flags on the player, so they were wiped whenever your character changed (e.g. your ruler died and an heir took over) and had to be re-entered. Settings are now stored as variables on the player's **primary title** instead, which the heir inherits along with the title — so they carry across succession automatically. (One-time note: existing saves will read as "Not set" the first time you load this version, since the old settings lived on the previous character; re-pick each setting once and they will persist from then on.)
+
+### Added
+- **Settings follow a change of primary title.** When your primary title itself changes — for example forming an empire, where a higher title becomes primary while the old one is kept — the settings are migrated onto the new primary title via the `on_primary_title_change` hook, so they are not stranded on the now-secondary title. This is a storage migration only; it does not re-apply directives on its own.
+
 ## [1.1.0] — 2026-05-20
 
 ### Added

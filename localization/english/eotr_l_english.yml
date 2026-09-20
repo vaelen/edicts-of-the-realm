@@ -32,6 +32,7 @@
  eotr_view_auto_apply_label:0 "Automatic Application: "
  eotr_view_auto_apply_on:0 "#V On#!\n"
  eotr_view_auto_apply_off:0 "#V Off#!\n"
+ eotr_view_settings_note:0 "\nNote: These settings are stored on your primary title. They pass to your heir along with the title, and if your primary title changes, they are carried over to the new title. However, if you choose another destiny instead of continuing as your heir, the new character's title will not have these settings and you will need to configure them again."
 
  # Religion Policy decision
  eotr_set_religion_policy:0 "Set Religion Policy"

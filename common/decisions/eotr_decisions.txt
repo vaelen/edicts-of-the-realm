@@ -43,6 +43,8 @@ eotr_view_settings = {
 			triggered_desc = { trigger = { primary_title = { has_variable = eotr_auto_apply } } desc = eotr_view_auto_apply_on }
 			triggered_desc = { trigger = { always = yes } desc = eotr_view_auto_apply_off }
 		}
+
+		desc = eotr_view_settings_note
 	}
 
 	selection_tooltip = eotr_view_settings_tooltip

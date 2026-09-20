@@ -4,6 +4,11 @@ All notable changes to **Edicts of the Realm** are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this mod adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] — 2026-09-20
+
+### Added
+- **Primary-title note on View Current Settings.** The read-only settings viewer now ends with a note explaining that settings are stored on the primary title, pass to the heir with it, and follow a change of primary title — but do not carry over when you choose another destiny instead of continuing as your heir, in which case they must be configured again.
+
 ## [1.2.0] — 2026-06-24
 
 ### Changed

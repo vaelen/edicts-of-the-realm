@@ -5,5 +5,5 @@ tags={
 	"Utilities"
 }
 name="Edicts of the Realm - Smart Vassal Directives"
-picture="thumbnail.png"
+picture="thumbnail.jpg"
 supported_version="1.19.*"

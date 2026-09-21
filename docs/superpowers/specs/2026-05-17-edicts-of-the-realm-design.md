@@ -101,7 +101,7 @@ A county is "misaligned" with its holder's faith (or culture) iff `county.faith 
 ```
 subject-directives-mod/
 ├── descriptor.mod
-├── thumbnail.png
+├── thumbnail.jpg
 ├── README.md
 ├── common/
 │   ├── decision_group_types/

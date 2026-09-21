@@ -1,6 +1,6 @@
 # Edicts of the Realm
 
-<p align="center"><img src="thumbnail.png" alt="Edicts of the Realm" width="240"></p>
+<p align="center"><img src="thumbnail.jpg" alt="Edicts of the Realm" width="240"></p>
 
 A Crusader Kings 3 mod that lets you define a smart realm-wide policy for vassal directives and apply it across every sub-realm vassal in one click. Each vassal receives an appropriate `vassal_directive_*` flag based on their own faith and culture vs. the lands they hold.
 

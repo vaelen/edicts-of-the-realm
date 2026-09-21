@@ -6,6 +6,11 @@ A Crusader Kings 3 mod that lets you define a smart realm-wide policy for vassal
 
 Supported game versions: 1.18 "Crane", 1.19 "Scribe".
 
+## Download
+
+- **Paradox Mods:** https://mods.paradoxplaza.com/mods/144604/Any
+- **Steam Workshop:** https://steamcommunity.com/sharedfiles/filedetails/?id=3805559282
+
 ## Usage
 
 Open the Decisions tab — there is a new group called "Edicts of the Realm" containing five decisions:

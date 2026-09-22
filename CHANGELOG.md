@@ -4,6 +4,11 @@ All notable changes to **Edicts of the Realm** are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this mod adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] — 2026-09-22
+
+### Changed
+- **Packaging only.** Thumbnail converted from PNG to JPEG so Steam Workshop accepts it as the preview image, and uploads now ship only the mod files instead of the whole repository. No gameplay changes.
+
 ## [1.2.1] — 2026-09-20
 
 ### Added

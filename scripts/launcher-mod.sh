@@ -8,7 +8,7 @@ repo=$(cd "$(dirname "$0")/.." && pwd)
 moddir="$HOME/.local/share/Paradox Interactive/Crusader Kings III/mod"
 stage="$moddir/edicts_of_the_realm"
 pointer="$moddir/edicts_of_the_realm.mod"
-files=(descriptor.mod common localization thumbnail.jpg Credits.txt README.md CHANGELOG.md)
+files=(descriptor.mod common localization thumbnail.jpg thumbnail.png Credits.txt README.md CHANGELOG.md)
 version=$(sed -n 's/^version="\(.*\)"/\1/p' "$repo/descriptor.mod")
 
 case "${1:-}" in

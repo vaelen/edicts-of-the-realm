@@ -19,6 +19,8 @@ CK3 reads mods from the Paradox user-data `mod/` directory. The exact location d
 
 In all cases CK3 needs both a symlink (or copy) of this repo into that directory and a sibling launcher-side `.mod` pointer file. Setup details (using the macOS path as the example) are in [docs/superpowers/plans/2026-05-18-edicts-of-the-realm.md](docs/superpowers/plans/2026-05-18-edicts-of-the-realm.md) ("Development environment setup"); substitute the matching path for your install.
 
+`scripts/launcher-mod.sh` manages the launcher-side pointer file: `dev` points the launcher at this repo (hot reload while editing), `upload` stages a clean `git archive` of HEAD into the launcher mod dir and points the launcher there (use before uploading to Steam Workshop / Paradox Mods, otherwise the launcher ships `.git/` and `docs/`), and `zip` builds the release zip. Run `dev` again after uploading.
+
 With CK3 running in `-debug_mode`:
 
 | Console command | Use |

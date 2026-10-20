@@ -4,7 +4,7 @@
 
 A Crusader Kings 3 mod that lets you define a smart realm-wide policy for vassal directives and apply it across every sub-realm vassal in one click. Each vassal receives an appropriate `vassal_directive_*` flag based on their own faith and culture vs. the lands they hold.
 
-Supported game versions: 1.18 "Crane", 1.19 "Scribe".
+Supported game version: 1.20 "Crozier". Version 1.2.3 is the last release for 1.18 "Crane" / 1.19 "Scribe".
 
 ## Download
 
@@ -33,6 +33,8 @@ For each landed AI vassal at or below county tier (including sub-vassals), the m
 4. If neither fired, the Default Edict is applied: `building_focus_economy` (Prosperity), `building_focus_fortification` (Bulwark), `building_focus_military` (Marshal), or nothing (None).
 
 Heretic vassals never receive `convert_faith` and foreign-culture vassals never receive `convert_culture` — those directives spread the *vassal's* faith / culture, so applying them would be counter-productive.
+
+"Faith" means faith, not rite (CK3 1.20+). A vassal of another rite of your faith counts as sharing your faith and can receive `convert_faith`. The vanilla directive only converts counties of other faiths, so a rite-only difference never triggers it.
 
 ## Compatibility
 

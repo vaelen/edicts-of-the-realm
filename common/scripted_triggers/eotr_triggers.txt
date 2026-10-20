@@ -1,6 +1,8 @@
 ﻿# True if the character holds at least one county whose faith differs from
 # the character's own faith. Used to decide whether vassal_directive_convert_faith
-# would have any work to do.
+# would have any work to do. Compares faith, not rite (1.20+): a same-faith
+# county of another rite does not count, because the directive does not
+# convert rites.
 eotr_has_faith_misaligned_county = {
 	any_held_county = {
 		NOT = { faith = prev.faith }

@@ -4,6 +4,16 @@ All notable changes to **Edicts of the Realm** are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this mod adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] — 2026-10-20
+
+### Changed
+- **Requires Crusader Kings III 1.20 "Crozier".** Version 1.2.3 remains the last release for 1.18/1.19.
+- **Religion Policy and rites.** "Shares your faith" compares faiths, not rites, so a vassal of another rite of your faith can receive Convert Faith. The vanilla directive only converts counties of other faiths, so a rite-only difference never triggers it.
+
+### Fixed
+- **Automatic Application hooks no longer clash with the base game.** The yearly refresh and the title gained/lost re-evaluations were silently ignored, and the character-culture-change and county-faith-change hooks replaced the game's own logic for those events. All hooks now run alongside the game's.
+- **Vassal and player faith changes trigger re-evaluation again.** 1.20 removed the hook the mod used; the mod now uses its replacement and ignores rite-only changes, which cannot affect any directive.
+
 ## [1.2.3] — 2026-09-22
 
 ### Changed

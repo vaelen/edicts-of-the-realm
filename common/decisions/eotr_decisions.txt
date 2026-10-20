@@ -1,5 +1,5 @@
 ﻿# Read-only view of the current configuration.
-# Reads the player's eotr_* character flags and renders a four-line summary
+# Reads the eotr_* variables on the player's primary title and renders a summary
 # of which option (if any) is selected for each setting. Confirming closes
 # the panel with no side effects.
 eotr_view_settings = {
@@ -66,7 +66,7 @@ eotr_view_settings = {
 }
 
 # Setting 1 of 4: Religion Policy
-# Toggles the eotr_religion_convert character flag on the player.
+# Sets or clears the eotr_religion_convert variable on the player's primary title.
 eotr_set_religion_policy = {
 	picture = { reference = "gfx/interface/illustrations/decisions/fp2_decision_struggle_compromise.dds" }
 	decision_group_type = eotr_realm_directives

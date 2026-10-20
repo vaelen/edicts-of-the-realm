@@ -15,6 +15,10 @@ eotr_evaluate_and_assign_directive = {
 	# Only fires when player has Religion=Convert AND vassal shares player's
 	# faith AND vassal has at least one misaligned county. Heretic vassals
 	# never get convert_faith (it would spread heresy).
+	# 1.20+: `faith` is the faith level, not the rite. A vassal of another rite
+	# of the player's faith qualifies on purpose: the directive only converts
+	# other-FAITH counties (rite-only mismatches do nothing), so the conversions
+	# it drives always bring counties into the player's faith.
 	if = {
 		limit = {
 			scope:eotr_player = { primary_title = { has_variable = eotr_religion_convert } }
